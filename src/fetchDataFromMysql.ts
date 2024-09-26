@@ -77,6 +77,8 @@ const fetchMySQLData = async () => {
     };
   } catch (error) {
     console.error("Error connecting to MySQL database:", error);
+  } finally {
+    await MysqlDataSource.destroy();
   }
 };
 
