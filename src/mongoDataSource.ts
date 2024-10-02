@@ -22,7 +22,7 @@ const MongoDataSource = new DataSource({
     BookingMongo,
   ],
   synchronize: true,
-  logging: false,
+  logging: true,
 });
 
 export default MongoDataSource;
