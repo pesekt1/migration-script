@@ -1,8 +1,12 @@
 import "reflect-metadata";
 import MigrateToMongo from "./MigrateToMongo";
 
-try {
-  MigrateToMongo();
-} catch (error) {
-  console.log("Error:", error);
+async function runMigration() {
+  try {
+    await MigrateToMongo();
+  } catch (error) {
+    console.log("Error:", error);
+  }
 }
+
+runMigration();

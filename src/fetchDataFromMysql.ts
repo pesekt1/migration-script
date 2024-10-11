@@ -24,15 +24,15 @@ const fetchMySQLData = async () => {
 
     // Query data from mysql database:
     const airlines = await mysqlAirlineRepository.find();
-    console.log("Airlines from MySQL:", airlines);
+    //console.log("Airlines from MySQL:", airlines);
 
     const airports = await mysqlAirportRepository.find();
-    console.log("Airport from MySQL:", airports);
+    //console.log("Airport from MySQL:", airports);
 
     const flights = await mysqlFlightRepository.find({
       relations: ["airline"],
     });
-    console.log("Flights from MySQL:", flights);
+    //console.log("Flights from MySQL:", flights);
 
     const passengers = await mysqlPassengerRepository.find({
       relations: [
@@ -44,7 +44,7 @@ const fetchMySQLData = async () => {
         "tickets.flightClass",
       ],
     });
-    console.log("Passengers from MySQL:", passengers);
+    //console.log("Passengers from MySQL:", passengers);
 
     const bookings = await mysqlBookingRepository.find({
       relations: [
@@ -57,15 +57,15 @@ const fetchMySQLData = async () => {
         "tickets.flight.arrivalAirport",
       ],
     });
-    console.log("Bookings from MySQL:", bookings);
+    //console.log("Bookings from MySQL:", bookings);
 
     const tickets = await mysqlTicketRepository.find({
       relations: ["flight", "flightClass"],
     });
-    console.log("Tickets from MySQL:", tickets);
+    //console.log("Tickets from MySQL:", tickets);
 
     const flightClasses = await mysqlFlightClassRepository.find();
-    console.log("Flight classes from MySQL:", flightClasses);
+    //console.log("Flight classes from MySQL:", flightClasses);
     return {
       airlines,
       airports,

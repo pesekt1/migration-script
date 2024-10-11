@@ -14,7 +14,7 @@ const MysqlDataSource = new DataSource({
   url: mysqlConnectionString,
   entities: [Airline, Airport, Flight, Passenger, Booking, Ticket, FlightClass],
   synchronize: false,
-  logging: true,
+  logging: false,
 });
 
 export default MysqlDataSource;
