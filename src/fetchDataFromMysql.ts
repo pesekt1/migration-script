@@ -34,6 +34,10 @@ const fetchMySQLData = async () => {
     });
     //console.log("Flights from MySQL:", flights);
 
+    const flightsExtended = await mysqlFlightRepository.find({
+      relations: ["airline", "departureAirport", "arrivalAirport"],
+    });
+
     const passengers = await mysqlPassengerRepository.find({
       relations: [
         "tickets",
@@ -70,6 +74,7 @@ const fetchMySQLData = async () => {
       airlines,
       airports,
       flights,
+      flightsExtended,
       passengers,
       bookings,
       tickets,
