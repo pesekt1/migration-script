@@ -95,18 +95,18 @@ async function migrateTicketsToNeo4j(tickets: any[], database: string) {
       database
     );
     await createRelationship(
-      "Ticket",
-      ticket.ID,
-      "FOR",
       "Passenger",
+      ticket.ID,
+      "PURCHASED",
+      "Ticket",
       ticket.passenger.ID,
       database
     );
     await createRelationship(
-      "Booking",
-      ticket.booking.ID,
-      "CONTAINS",
       "Ticket",
+      ticket.booking.ID,
+      "BELONGS_TO",
+      "Booking",
       ticket.ID,
       database
     );

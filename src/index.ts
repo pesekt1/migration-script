@@ -10,7 +10,7 @@ async function runMigrations() {
   }
 
   try {
-    await migrateToNeo4j("testdb");
+    await migrateToNeo4j("booking");
   } catch (error) {
     console.log("Error migrating to Neo4j:", error);
   }
