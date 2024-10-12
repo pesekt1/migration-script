@@ -19,6 +19,100 @@ async function migrateAirlinesToNeo4j(
   }
 }
 
+async function migrateFlightClassesToNeo4j(
+  flightClasses: { ID: number; name: string }[],
+  database: string
+) {
+  for (const flightClass of flightClasses) {
+    await createNode(
+      "FlightClass",
+      { id: flightClass.ID, name: flightClass.name },
+      database
+    );
+  }
+}
+
+async function migratePassengersToNeo4j(
+  passengers: { ID: number; fist_name: string; last_name: string }[],
+  database: string
+) {
+  for (const passenger of passengers) {
+    await createNode(
+      "Passenger",
+      {
+        id: passenger.ID,
+        first_name: passenger.fist_name,
+        last_name: passenger.last_name,
+      },
+      database
+    );
+  }
+}
+
+async function migrateBookingsToNeo4j(
+  bookings: { ID: number }[],
+  database: string
+) {
+  for (const booking of bookings) {
+    await createNode(
+      "Booking",
+      {
+        id: booking.ID,
+      },
+      database
+    );
+  }
+}
+
+async function migrateTicketsToNeo4j(tickets: any[], database: string) {
+  for (const ticket of tickets) {
+    await createNode(
+      "Ticket",
+      {
+        id: ticket.ID,
+        ticketNumber: ticket.ticketNumber,
+        price: ticket.Price,
+        confirmationNumber: ticket.ConfirmationNumber,
+      },
+      database
+    );
+
+    // Create relationships
+    await createRelationship(
+      "Ticket",
+      ticket.ID,
+      "FOR",
+      "Flight",
+      ticket.flight.ID,
+      database
+    );
+    await createRelationship(
+      "Ticket",
+      ticket.ID,
+      "OF_CLASS",
+      "FlightClass",
+      ticket.flightClass.ID,
+      database
+    );
+    await createRelationship(
+      "Ticket",
+      ticket.ID,
+      "FOR",
+      "Passenger",
+      ticket.passenger.ID,
+      database
+    );
+    await createRelationship(
+      "Booking",
+      ticket.booking.ID,
+      "CONTAINS",
+      "Ticket",
+      ticket.ID,
+      database
+    );
+  }
+}
+
 async function migrateAirportsToNeo4j(
   airports: {
     ID: number;
@@ -93,7 +187,14 @@ async function migrateToNeo4j(database: string) {
     console.log("No data fetched from MySQL, exiting...");
     return;
   }
-  const { airlines, airports, flightsExtended, passengers, bookings } = data;
+  const {
+    airlines,
+    airports,
+    flightsExtended,
+    passengers,
+    bookings,
+    ticketsExtended,
+  } = data;
   console.log(flightsExtended);
 
   try {
@@ -106,7 +207,11 @@ async function migrateToNeo4j(database: string) {
     await migrateAirlinesToNeo4j(airlines, database);
     await migrateAirportsToNeo4j(airports, database);
     await migrateFlightsToNeo4j(flightsExtended, database);
-    console.log("Airlines, airports, and flights migrated successfully.");
+    await migrateFlightClassesToNeo4j(data.flightClasses, database);
+    await migratePassengersToNeo4j(passengers, database);
+    await migrateBookingsToNeo4j(bookings, database);
+    await migrateTicketsToNeo4j(ticketsExtended, database);
+    console.log("Migration successful.");
   } catch (error) {
     console.log("Error migrating data:", error);
   } finally {

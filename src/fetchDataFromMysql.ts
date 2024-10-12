@@ -68,6 +68,11 @@ const fetchMySQLData = async () => {
     });
     //console.log("Tickets from MySQL:", tickets);
 
+    const ticketsExtended = await mysqlTicketRepository.find({
+      relations: ["passenger", "flight", "flightClass", "booking"],
+    });
+    //console.log("Tickets from MySQL:", ticketsExtended);
+
     const flightClasses = await mysqlFlightClassRepository.find();
     //console.log("Flight classes from MySQL:", flightClasses);
     return {
@@ -78,6 +83,7 @@ const fetchMySQLData = async () => {
       passengers,
       bookings,
       tickets,
+      ticketsExtended,
       flightClasses,
     };
   } catch (error) {
