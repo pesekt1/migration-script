@@ -6,10 +6,15 @@ import {
 } from "./neo4jConnection";
 import fetchMySQLData from "./fetchDataFromMysql";
 
-async function migrateAirlinesToNeo4j(
-  airlines: { ID: number; name: string }[],
-  database: string
-) {
+import { Airline } from "./entities/Airline";
+import { FlightClass } from "./entities/FlightClass";
+import { Flight } from "./entities/Flight";
+import { Passenger } from "./entities/Passenger";
+import { Booking } from "./entities/Booking";
+import { Ticket } from "./entities/Ticket";
+import { Airport } from "./entities/Airport";
+
+async function migrateAirlinesToNeo4j(airlines: Airline[], database: string) {
   for (const airline of airlines) {
     await createNode(
       "Airline",
@@ -20,7 +25,7 @@ async function migrateAirlinesToNeo4j(
 }
 
 async function migrateFlightClassesToNeo4j(
-  flightClasses: { ID: number; name: string }[],
+  flightClasses: FlightClass[],
   database: string
 ) {
   for (const flightClass of flightClasses) {
@@ -33,7 +38,7 @@ async function migrateFlightClassesToNeo4j(
 }
 
 async function migratePassengersToNeo4j(
-  passengers: { ID: number; fist_name: string; last_name: string }[],
+  passengers: Passenger[],
   database: string
 ) {
   for (const passenger of passengers) {
@@ -49,10 +54,7 @@ async function migratePassengersToNeo4j(
   }
 }
 
-async function migrateBookingsToNeo4j(
-  bookings: { ID: number }[],
-  database: string
-) {
+async function migrateBookingsToNeo4j(bookings: Booking[], database: string) {
   for (const booking of bookings) {
     await createNode(
       "Booking",
@@ -64,7 +66,7 @@ async function migrateBookingsToNeo4j(
   }
 }
 
-async function migrateTicketsToNeo4j(tickets: any[], database: string) {
+async function migrateTicketsToNeo4j(tickets: Ticket[], database: string) {
   for (const ticket of tickets) {
     await createNode(
       "Ticket",
@@ -113,16 +115,7 @@ async function migrateTicketsToNeo4j(tickets: any[], database: string) {
   }
 }
 
-async function migrateAirportsToNeo4j(
-  airports: {
-    ID: number;
-    code: string;
-    name: string;
-    city: string;
-    state: string;
-  }[],
-  database: string
-) {
+async function migrateAirportsToNeo4j(airports: Airport[], database: string) {
   for (const airport of airports) {
     await createNode(
       "Airport",
@@ -138,7 +131,7 @@ async function migrateAirportsToNeo4j(
   }
 }
 
-async function migrateFlightsToNeo4j(flights: any[], database: string) {
+async function migrateFlightsToNeo4j(flights: Flight[], database: string) {
   for (const flight of flights) {
     await createNode(
       "Flight",
