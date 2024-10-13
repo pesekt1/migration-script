@@ -90,7 +90,12 @@ async function createNode(label: string, properties: Record<string, any>) {
 
   try {
     // Construct the Cypher query
-    const query = `CREATE (n:${label} $properties) RETURN n`;
+    //toInteger is used because otherwise float values are used.
+    const query = `
+    CREATE (n:${label} $properties)
+    SET n.id = toInteger(n.id)
+    RETURN n
+    `;
     const params = { properties };
 
     // Run the query to create the node
