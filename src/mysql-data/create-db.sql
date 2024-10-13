@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `booking3`.`airline` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `booking3`.`airport`
 -- -----------------------------------------------------
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `booking3`.`airport` (
   `city` VARCHAR(255) NOT NULL,
   `state` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `booking3`.`booking`
 -- -----------------------------------------------------
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `booking3`.`flight` (
   CONSTRAINT `fk_flight_airport1` FOREIGN KEY (`departureAirport`) REFERENCES `booking3`.`airport` (`ID`),
   CONSTRAINT `fk_flight_airport2` FOREIGN KEY (`arrivalAirport`) REFERENCES `booking3`.`airport` (`ID`),
   CONSTRAINT `FKflight48259` FOREIGN KEY (`airlineID`) REFERENCES `booking3`.`airline` (`ID`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `booking3`.`flightclass`
 -- -----------------------------------------------------
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `booking3`.`flightclass` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `booking3`.`passenger`
 -- -----------------------------------------------------
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `booking3`.`passenger` (
   `fist_name` VARCHAR(255) NOT NULL,
   `last_name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `booking3`.`ticket`
 -- -----------------------------------------------------
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `booking3`.`ticket` (
   CONSTRAINT `has` FOREIGN KEY (`flightClassID`) REFERENCES `booking3`.`flightclass` (`ID`),
   CONSTRAINT `issued for` FOREIGN KEY (`flightID`) REFERENCES `booking3`.`flight` (`ID`),
   CONSTRAINT `purchases` FOREIGN KEY (`passengerID`) REFERENCES `booking3`.`passenger` (`ID`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 SET SQL_MODE = @OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
