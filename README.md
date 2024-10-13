@@ -79,5 +79,5 @@ Example of passenger document:
 
 ## TODO
 - There is a typo in the passengers table in myslq. fist_name should be first_name. 
-- Numbers are passed with decimal point to neo4j. Needs to be fixed.
-- Generate more test data to MySQL.
+- Numbers are passed with a decimal point to neo4j. Needs to be fixed.
+- Create some test cypher queries.
