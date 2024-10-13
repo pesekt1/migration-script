@@ -1,3 +1,4 @@
+import "dotenv/config";
 import "reflect-metadata";
 import MigrateToMongo from "./MigrateToMongo";
 import migrateToNeo4j from "./MigrateToNeo4j";
@@ -10,7 +11,7 @@ async function runMigrations() {
   }
 
   try {
-    await migrateToNeo4j("booking");
+    await migrateToNeo4j();
   } catch (error) {
     console.log("Error migrating to Neo4j:", error);
   }

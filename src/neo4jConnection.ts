@@ -1,13 +1,18 @@
 import neo4j from "neo4j-driver";
 
+const database = process.env.DATABASE_NAME;
+if (!database) {
+  throw new Error("DATABASE_NAME is required");
+}
+
 // Create a Neo4j driver instance
 const driver = neo4j.driver(
-  "neo4j://localhost", // Replace with your Neo4j instance URL if different
-  neo4j.auth.basic("neo4j", "12345678") // Replace with your Neo4j username and password
+  "neo4j://localhost", // Neo4j instance URL
+  neo4j.auth.basic("neo4j", "12345678") // username and password
 );
 
 // Function to test the connection and perform a basic query
-async function testConnection(database?: string) {
+async function testConnection() {
   const session = driver.session({ database });
 
   try {
@@ -27,7 +32,7 @@ async function testConnection(database?: string) {
   }
 }
 
-async function recreateDatabase(database: string) {
+async function recreateDatabase() {
   const session = driver.session({ database: "system" });
 
   try {
@@ -55,8 +60,7 @@ const createRelationship = async (
   fromId: number | string,
   relationship: string,
   toLabel: string,
-  toId: number | string,
-  database?: string
+  toId: number | string
 ) => {
   const session = driver.session({ database });
 
@@ -81,11 +85,7 @@ const createRelationship = async (
   }
 };
 
-async function createNode(
-  label: string,
-  properties: Record<string, any>,
-  database?: string
-) {
+async function createNode(label: string, properties: Record<string, any>) {
   const session = driver.session({ database });
 
   try {

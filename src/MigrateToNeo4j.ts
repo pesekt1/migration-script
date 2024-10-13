@@ -14,70 +14,47 @@ import { Booking } from "./entities/Booking";
 import { Ticket } from "./entities/Ticket";
 import { Airport } from "./entities/Airport";
 
-async function migrateAirlinesToNeo4j(airlines: Airline[], database: string) {
+async function migrateAirlinesToNeo4j(airlines: Airline[]) {
   for (const airline of airlines) {
-    await createNode(
-      "Airline",
-      { id: airline.ID, name: airline.name },
-      database
-    );
+    await createNode("Airline", { id: airline.ID, name: airline.name });
   }
 }
 
-async function migrateFlightClassesToNeo4j(
-  flightClasses: FlightClass[],
-  database: string
-) {
+async function migrateFlightClassesToNeo4j(flightClasses: FlightClass[]) {
   for (const flightClass of flightClasses) {
-    await createNode(
-      "FlightClass",
-      { id: flightClass.ID, name: flightClass.name },
-      database
-    );
+    await createNode("FlightClass", {
+      id: flightClass.ID,
+      name: flightClass.name,
+    });
   }
 }
 
-async function migratePassengersToNeo4j(
-  passengers: Passenger[],
-  database: string
-) {
+async function migratePassengersToNeo4j(passengers: Passenger[]) {
   for (const passenger of passengers) {
-    await createNode(
-      "Passenger",
-      {
-        id: passenger.ID,
-        first_name: passenger.fist_name,
-        last_name: passenger.last_name,
-      },
-      database
-    );
+    await createNode("Passenger", {
+      id: passenger.ID,
+      first_name: passenger.fist_name,
+      last_name: passenger.last_name,
+    });
   }
 }
 
-async function migrateBookingsToNeo4j(bookings: Booking[], database: string) {
+async function migrateBookingsToNeo4j(bookings: Booking[]) {
   for (const booking of bookings) {
-    await createNode(
-      "Booking",
-      {
-        id: booking.ID,
-      },
-      database
-    );
+    await createNode("Booking", {
+      id: booking.ID,
+    });
   }
 }
 
-async function migrateTicketsToNeo4j(tickets: Ticket[], database: string) {
+async function migrateTicketsToNeo4j(tickets: Ticket[]) {
   for (const ticket of tickets) {
-    await createNode(
-      "Ticket",
-      {
-        id: ticket.ID,
-        ticketNumber: ticket.ticketNumber,
-        price: ticket.Price,
-        confirmationNumber: ticket.ConfirmationNumber,
-      },
-      database
-    );
+    await createNode("Ticket", {
+      id: ticket.ID,
+      ticketNumber: ticket.ticketNumber,
+      price: ticket.Price,
+      confirmationNumber: ticket.ConfirmationNumber,
+    });
 
     // Create relationships
     await createRelationship(
@@ -85,66 +62,54 @@ async function migrateTicketsToNeo4j(tickets: Ticket[], database: string) {
       ticket.ID,
       "FOR",
       "Flight",
-      ticket.flight.ID,
-      database
+      ticket.flight.ID
     );
     await createRelationship(
       "Ticket",
       ticket.ID,
       "OF_CLASS",
       "FlightClass",
-      ticket.flightClass.ID,
-      database
+      ticket.flightClass.ID
     );
     await createRelationship(
       "Passenger",
       ticket.passenger.ID,
       "PURCHASED",
       "Ticket",
-      ticket.ID,
-      database
+      ticket.ID
     );
     await createRelationship(
       "Ticket",
       ticket.ID,
       "BELONGS_TO",
       "Booking",
-      ticket.booking.ID,
-      database
+      ticket.booking.ID
     );
   }
 }
 
-async function migrateAirportsToNeo4j(airports: Airport[], database: string) {
+async function migrateAirportsToNeo4j(airports: Airport[]) {
   for (const airport of airports) {
-    await createNode(
-      "Airport",
-      {
-        id: airport.ID,
-        code: airport.code,
-        name: airport.name,
-        city: airport.city,
-        state: airport.state,
-      },
-      database
-    );
+    await createNode("Airport", {
+      id: airport.ID,
+      code: airport.code,
+      name: airport.name,
+      city: airport.city,
+      state: airport.state,
+    });
   }
 }
 
-async function migrateFlightsToNeo4j(flights: Flight[], database: string) {
+async function migrateFlightsToNeo4j(flights: Flight[]) {
   for (const flight of flights) {
-    await createNode(
-      "Flight",
-      {
-        id: flight.ID,
-        number: flight.number,
-        departureDateTime: flight.departureDateTime.toISOString(),
-        arrivalDateTime: flight.arrivalDateTime.toISOString(),
-        duration: flight.duration,
-        distance: flight.distance,
-      },
-      database
-    );
+    await createNode("Flight", {
+      id: flight.ID,
+      number: flight.number,
+      departureDateTime: flight.departureDateTime.toISOString(),
+      arrivalDateTime: flight.arrivalDateTime.toISOString(),
+      duration: flight.duration,
+      distance: flight.distance,
+    });
 
     // Create relationships
     await createRelationship(
@@ -152,29 +117,26 @@ async function migrateFlightsToNeo4j(flights: Flight[], database: string) {
       flight.ID,
       "DEPARTS_FROM",
       "Airport",
-      flight.departureAirport.ID,
-      database
+      flight.departureAirport.ID
     );
     await createRelationship(
       "Flight",
       flight.ID,
       "ARRIVES_AT",
       "Airport",
-      flight.arrivalAirport.ID,
-      database
+      flight.arrivalAirport.ID
     );
     await createRelationship(
       "Flight",
       flight.ID,
       "OPERATED_BY",
       "Airline",
-      flight.airline.ID,
-      database
+      flight.airline.ID
     );
   }
 }
 
-async function migrateToNeo4j(database: string) {
+async function migrateToNeo4j() {
   const data = await fetchMySQLData();
   if (!data) {
     console.log("No data fetched from MySQL, exiting...");
@@ -191,19 +153,19 @@ async function migrateToNeo4j(database: string) {
   console.log(flightsExtended);
 
   try {
-    await recreateDatabase(database);
+    await recreateDatabase();
   } catch (error) {
     console.log("Error:", error);
   }
 
   try {
-    await migrateAirlinesToNeo4j(airlines, database);
-    await migrateAirportsToNeo4j(airports, database);
-    await migrateFlightsToNeo4j(flightsExtended, database);
-    await migrateFlightClassesToNeo4j(data.flightClasses, database);
-    await migratePassengersToNeo4j(passengers, database);
-    await migrateBookingsToNeo4j(bookings, database);
-    await migrateTicketsToNeo4j(ticketsExtended, database);
+    await migrateAirlinesToNeo4j(airlines);
+    await migrateAirportsToNeo4j(airports);
+    await migrateFlightsToNeo4j(flightsExtended);
+    await migrateFlightClassesToNeo4j(data.flightClasses);
+    await migratePassengersToNeo4j(passengers);
+    await migrateBookingsToNeo4j(bookings);
+    await migrateTicketsToNeo4j(ticketsExtended);
     console.log("Migration successful.");
   } catch (error) {
     console.log("Error migrating data:", error);
