@@ -28,7 +28,7 @@ You can see the examples of the collections in the `src/collections-examples` fo
 - flights.json
 - passengers.json
 
-Example of passenger document:
+Example of passenger document - with embedded documents:
 ```json
 {
   "passenger_id": 1,
