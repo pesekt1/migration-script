@@ -1,5 +1,21 @@
 # Migration script:
-Migrates data from MySQL to MongoDB.
+Migrates data from MySQL to MongoDB and to Neo4j database.
+
+Usage:
+
+Run:
+- MySQL server
+- MongoDB server
+- Neo4j server
+
+Run sql scripts in MySQL server:
+- create-db.sql
+- insert-statements.sql
+
+Run the migration script:
+```bash
+npm start
+```
 
 ## MySQL ERD:
 ![MySQL ERD](./src/assets/flight%20booking%20system%20ERD.png)
