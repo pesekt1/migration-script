@@ -125,3 +125,4 @@ DETACH DELETE p;
 - There is a typo in the passengers table in MySQL. fist_name should be first_name. 
 - Numbers are passed with a decimal point to neo4j. Needs to be fixed.
 - Create some test cypher queries.
+- The id from MySQL recordsd is useless in Neo4j, so it could be ignored. 
