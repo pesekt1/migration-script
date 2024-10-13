@@ -62,4 +62,6 @@ Example of passenger document:
 ![Neo4j Data](./src/assets/neo4j_booking.png)
 
 ## TODO
-I have a typo in the passengers table in myslq. fist_name should be first_name. 
+- There is a typo in the passengers table in myslq. fist_name should be first_name. 
+- Numbers are passed with decimal point to neo4j. Needs to be fixed.
+- Generate more test data to MySQL.
