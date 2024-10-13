@@ -71,9 +71,49 @@ RETURN f;
 // Delete Data
 
 // Delete a Specific Ticket
+// Any relationships connected to this Ticket node will also be deleted.
 MATCH (t:Ticket { ticketNumber: 'T12345' })
 DETACH DELETE t;
 
 // Delete a Specific Passenger
 MATCH (p:Passenger { firstName: 'John', lastName: 'Doe' })
 DETACH DELETE p;
+
+//create data
+// Create Airline Nodes
+CREATE (a1:Airline { ID: 1, name: 'American Airlines' });
+
+// Create Airport Nodes
+CREATE (ap1:Airport { ID: 1, code: 'JFK', name: 'John F. Kennedy International Airport', city: 'New York', state: 'NY' });
+
+// Create Flight Nodes and Relationships
+CREATE (f1:Flight { ID: 1, number: 'AA101', departureDateTime: '2023-10-01T10:00:00', arrivalDateTime: '2023-10-01T14:00:00', duration: 240, distance: 2475 });
+
+MATCH (ap1:Airport { ID: 1 }),
+(a1:Airline { ID: 1 }),
+(f1:Flight { ID: 1 })
+CREATE (f1)-[:DEPARTS_FROM]->(ap1),
+(f1)-[:ARRIVES_AT]->(ap2),
+(f1)-[:OPERATED_BY]->(a1);
+
+// Create Passenger Nodes
+CREATE (p1:Passenger { ID: 1, firstName: 'John', lastName: 'Doe' });
+
+// Create FlightClass Nodes
+CREATE (fc1:FlightClass { ID: 1, name: 'Economy' });
+
+// Create Booking Nodes
+CREATE (b1:Booking { ID: 1 });
+
+// Create Ticket Nodes and Relationships
+CREATE (t1:Ticket { ID: 1, ticketNumber: 'T12345', price: 200, confirmationNumber: 'CONF123' });
+
+MATCH (p1:Passenger { ID: 1 }),
+(f1:Flight { ID: 1 }),
+(fc1:FlightClass { ID: 1 }),
+(b1:Booking { ID: 1 }),
+(t1:Ticket { ID: 1 })
+CREATE (t1)-[:PURCHASED_BY]->(p1),
+(t1)-[:FOR_FLIGHT]->(f1),
+(t1)-[:IN_CLASS]->(fc1),
+(t1)-[:BOOKED_UNDER]->(b1),
