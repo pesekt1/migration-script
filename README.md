@@ -1,6 +1,8 @@
 # Migration script:
 Migrates data from MySQL to MongoDB and to Neo4j database.
 
+![Architecture](./src/assets/migration-architecture.drawio.png)
+
 Usage:
 
 Run:
