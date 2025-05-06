@@ -5,10 +5,14 @@ if (!database) {
   throw new Error("DATABASE_NAME is required");
 }
 
+const neo4jUrl = process.env.NEO4J_URL || "neo4j://localhost";
+const neo4jUser = process.env.NEO4J_USER || "neo4j";
+const neo4jPassword = process.env.NEO4J_PASSWORD || "12345678";
+
 // Create a Neo4j driver instance
 const driver = neo4j.driver(
-  "neo4j://localhost", // Neo4j instance URL
-  neo4j.auth.basic("neo4j", "12345678") // username and password
+  neo4jUrl, // Neo4j instance URL
+  neo4j.auth.basic(neo4jUser, neo4jPassword) // username and password
 );
 
 // Function to test the connection and perform a basic query

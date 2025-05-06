@@ -7,7 +7,7 @@ import { Booking } from "./entities/Booking";
 import { Ticket } from "./entities/Ticket";
 import { FlightClass } from "./entities/FlightClass";
 
-const mysqlConnectionString = "mysql://migration:1234@localhost:3306/booking3";
+const mysqlConnectionString = process.env.MYSQL_URL || "mysql://migration:1234@localhost:3306/booking3";
 
 const MysqlDataSource = new DataSource({
   type: "mysql",

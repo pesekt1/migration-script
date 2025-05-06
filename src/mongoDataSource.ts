@@ -6,7 +6,7 @@ import { PassengerMongo } from "./entities/PassengerMongo";
 import { TicketMongo } from "./entities/TicketMongo";
 import { BookingMongo } from "./entities/BookingMongo";
 
-const mongoConnectionString = "mongodb://localhost:27017/booking";
+const mongoConnectionString = process.env.MONGO_URL || "mongodb://localhost:27017/booking";
 
 const MongoDataSource = new DataSource({
   type: "mongodb",
