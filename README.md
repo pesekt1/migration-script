@@ -124,4 +124,7 @@ DETACH DELETE p;
 ```
 
 ## TODO
-- There is a typo in the passengers table in MySQL. fist_name should be first_name. 
+- There is a typo in the passengers table in MySQL. fist_name should be first_name.
+
+- We could automatically seed the MySQL database - we have a dump file or create and insert scripts. 
+  At the moment, we need to seed the database manually.
