@@ -1,0 +1,51 @@
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: booking3
+      MYSQL_USER: migration
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  mongo:
+    image: mongo:7
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  neo4j:
+    image: neo4j:5-enterprise
+    environment:
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
+      NEO4J_AUTH: neo4j/12345678
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+
+  app:
+    build: .
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME}
+      - MYSQL_URL=${MYSQL_URL}
+      - MONGO_URL=${MONGO_URL}
+      - NEO4J_URL=${NEO4J_URL}
+      - NEO4J_USER=${NEO4J_USER}
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+    depends_on:
+      - mysql
+      - mongo
+      - neo4j
+    volumes:
+      - .:/app
+
+volumes:
+  mysql_data:
+  mongo_data:
+  neo4j_data:
